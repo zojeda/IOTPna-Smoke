@@ -1,0 +1,16 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maximiliano Churichi <mchurichi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^4.0.5",
+    "promise": "^7.0.1",
+    "underscore": "^1.8.3"
+  }
+}
