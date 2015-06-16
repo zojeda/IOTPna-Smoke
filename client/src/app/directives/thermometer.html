@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Temp</h3>
+    </div>
+    <div class="panel-body">
+        <svg id="temp" width="50" height="200">
+            <rect id="rec" x="0" y="50" width="50" height="100" style="fill:lime"> 
+                <animate attributeName="y" attributeType="XML" begin="0s" dur="1s" fill="freeze" from="{{thermometer.value}}" to="0" />
+                <animate attributeName="height" attributeType="XML" begin="0s" dur="1s" fill="freeze" from="100" to="200" />
+                <animate attributeName="fill" attributeType="CSS" from="lime" to="red" begin="0s" dur="1s" fill="freeze" />
+            </rect>
+        </svg>
+    </div>            
+</div>

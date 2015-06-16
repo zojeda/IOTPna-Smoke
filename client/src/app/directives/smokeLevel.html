@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">CO2</h3>
+    </div>
+    <div class="panel-body">
+        <svg id="smoke" width="{{ smokeLevel.value }}" height="200">
+            <rect id="rec" x="0" y="50" width="50" height="100" style="fill:lightblue"> 
+                <animate attributeName="y" attributeType="XML" begin="0s" dur="6s" fill="freeze" from="100" to="0" />
+                <animate attributeName="height" attributeType="XML" begin="0s" dur="6s" fill="freeze" from="100" to="200" />
+                <animate attributeName="fill" attributeType="CSS" from="skyblue" to="grey" begin="2s" dur="4s" fill="freeze" />
+            </rect>
+        </svg>
+    </div>            
+</div>  
