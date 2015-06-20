@@ -5,8 +5,10 @@ var io = require('socket.io')(server);
 
 server.listen(80);
 
+app.use(express.static('../client/dist'));
+
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile('../client/dist' + '/index.html');
 });
 
 io.on('connection', function (socket) {
