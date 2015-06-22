@@ -3,10 +3,10 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
-
+var nodemon = require('gulp-nodemon');
 var util = require('util');
 
-var middleware = require('./proxy');
+var middleware = require('./proxy')();
 
 module.exports = function(options) {
 
@@ -54,5 +54,13 @@ module.exports = function(options) {
 
   gulp.task('serve:e2e-dist', ['build'], function () {
     browserSyncInit(options.dist, []);
+  });
+
+  gulp.task('start', ['build'], function(cb) {
+    return nodemon({
+      script: '../server/server.js'
+    }).on('start', function() {
+      cb();
+    });
   });
 };

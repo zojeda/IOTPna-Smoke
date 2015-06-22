@@ -1,0 +1,16 @@
+{
+  "libs": [
+    "ecma5",
+    "jquery"
+  ],
+  "loadEagerly": [
+  ],
+  "plugins": {
+    "complete_strings": {},
+    "lint": {},
+    "node": {},
+    "doc_comment": {
+     "fullDocs": true
+    }
+  }
+}

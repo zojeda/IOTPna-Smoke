@@ -7,4 +7,8 @@ var config = {
 };
 
 var sensor1 = db.create(config);
-sensor1.read();
+sensor1.connect();
+
+setInterval(function() {
+  sensor1.read();
+}, 1000);

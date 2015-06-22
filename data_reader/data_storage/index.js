@@ -12,13 +12,15 @@ var defaultConfig = {
 
 module.exports = {
   create: function(config) {
-    return new Reader(_({}).extend(defaultConfig, config));
+    var reader = new Reader(_({}).extend(defaultConfig, config));
+    return reader;
   }
 };
 
 function Reader(config) {
   var self = this;
   this.cfg = config || {};
+
   this.connect = function() {
     mongoose.connect(this.cfg.mongodb);
   };
@@ -28,11 +30,10 @@ function Reader(config) {
   };
 
   this.read = function() {
-      this.connect();
       this.cfg.reader.read()
         .then(this.saveRawData)
-        .then(this.saveData)
-        .then(this.disconnect);
+        .then(this.saveData);
+        //.then(this.disconnect);
     },
 
     this.saveRawData = function(data) {
@@ -45,7 +46,9 @@ function Reader(config) {
   this.saveData = function(data) {
     console.log('saving data : ' + data);
     var signal = self.parseData(data);
+    console.log('parsed signal : ' + JSON.stringify(signal));
     Signal.create(signal);
+    console.log('saved signal ');
     return signal;
   };
 
@@ -56,9 +59,9 @@ function Reader(config) {
       var entry = variable.split('=');
       vars[entry[0]] = entry[1];
     });
-    return new Signal({
+    return {
       temperature: vars.temp,
       smoke: vars.smoke
-    });
+    };
   }
 }

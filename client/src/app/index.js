@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('smokeWebClient', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'highcharts-ng'])
-  .config(function ($stateProvider, $urlRouterProvider) {
+angular.module('smokeWebClient', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'highcharts-ng', 'btford.socket-io'])
+  .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
         url: '/',
@@ -11,4 +11,6 @@ angular.module('smokeWebClient', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ui.rout
 
     $urlRouterProvider.otherwise('/');
   })
-;
+  .factory('socketio', function(socketFactory) {
+    return socketFactory();
+  });
