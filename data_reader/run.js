@@ -3,7 +3,8 @@
 var db = require('./data_storage');
 
 var config = {
-  mongodb: 'mongodb://localhost/test_db'
+  mongodb: 'mongodb://hxpws-zojeda/test_db',
+  reader: require('./data_storage/serialReader')('COM4')
 };
 
 var sensor1 = db.create(config);

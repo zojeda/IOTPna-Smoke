@@ -26,6 +26,6 @@ function onDataError(err) {
 
 }
 
-subscriber.subscribe('mongodb://localhost/test_db', 'signals', onData, onDataError);
+subscriber.subscribe('mongodb://hxpws-zojeda/test_db', 'signals', onData, onDataError);
 
 server.listen(8080);
