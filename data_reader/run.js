@@ -3,7 +3,7 @@
 var db = require('./data_storage');
 
 var config = {
-  mongodb: 'mongodb://hxpws-zojeda/test_db',
+  mongodb: require('../config.json').mongodbUrl,
   //reader: require('./data_storage/serialReader')('COM4')
   parseData : function(data) {
     var matches = data.match(/<Gas:\s*([\d+.]*)\[.{1,3}\]>\s*<Temperatura:\s*([\d+.]*)\[.{1,3}\]>\s*<Humedad:\s*([\d+.]*)\[.{1,3}\]>/)

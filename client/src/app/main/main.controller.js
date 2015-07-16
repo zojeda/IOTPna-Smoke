@@ -2,13 +2,26 @@
 
 angular.module('smokeWebClient')
   .controller('MainCtrl', function($scope, socketio) {
+    $scope.error = undefined;
 
     socketio.on('data', function(data) {
       var time = new Date(data.time);
 
       $scope.historicalChartConfig.series[0].data.push([time.getTime(), data.temperature]);
       $scope.historicalChartConfig.series[1].data.push([time.getTime(), data.smoke]);
-    })
+      $scope.thermometer.value = data.temperature;
+      $scope.error = undefined;
+      $scope.smokeLevel.value = data.smoke;
+    });
+
+    socketio.on('error', function(message) {
+      $scope.error = message;
+    });
+
+    socketio.on('status', function(message) {
+      $scope.status = message;
+    });
+
     $scope.historicalChartConfig = {
       options: {
         chart: {
@@ -23,15 +36,15 @@ angular.module('smokeWebClient')
       },
       series: [],
       title: {
-        text: 'Datos Historicos'
+        text: 'Datos'
       },
       useHighStocks: true
     };
     $scope.historicalChartConfig.series.push({
-        id: 1,
+        id: 'Temperature',
         data: []
       },   {
-        id: 2,
+        id: 'Smoke/Gas',
         data: []
 
       }

@@ -56,7 +56,7 @@ module.exports = function(options) {
     browserSyncInit(options.dist, []);
   });
 
-  gulp.task('start', ['build'], function(cb) {
+  gulp.task('start', ['build', 'serve'], function(cb) {
     return nodemon({
       script: '../server/server.js'
     }).on('start', function() {

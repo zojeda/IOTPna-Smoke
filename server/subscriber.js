@@ -5,7 +5,7 @@
 
 
 // subscriber function
-module.exports.subscribe = function(db_url, collection_name, filter, callback, error){
+module.exports.subscribe = function(dbUrl, collectionName, filter, callback, error){
 
   if ('function' == typeof filter) {
       error = callback;
@@ -17,10 +17,10 @@ module.exports.subscribe = function(db_url, collection_name, filter, callback, e
   if(!error) {error = function(err) {console.error(err)}};
 
   // connect to MongoDB
-  require('mongodb').MongoClient.connect(db_url, function(err, db){
+  require('mongodb').MongoClient.connect(dbUrl, function(err, db){
 
     // make sure you have created capped collection "messages" on db "test"
-    db.collection('signals', function(err, coll) {
+    db.collection(collectionName, function(err, coll) {
 
       // seek to latest object
       var seekCursor = coll.find(filter).sort({$natural: -1}).limit(1);
