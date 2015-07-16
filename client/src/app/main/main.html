@@ -1,18 +1,19 @@
 <div ng-include="'app/components/navbar/navbar.html'"></div>
 <div class="container">
-  <div class="alert alert-info" role="alert">
-    {{status}}
-  </div>
-
-  <div class="alert alert-danger" role="alert" ng-if="error">
+  <div class="alert alert-danger" ng-if="error" role="alert">
     <span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>
     <span class="sr-only">Error:</span>
     {{error}}
   </div>
   <div class="pull-left">
     <div ng-thermometer></div>
+    {{thermometer.value}}
   </div>
   <div class="pull-left">
     <div ng-smoke-level></div>
+    {{smokeLevel.value}}
   </div>
   <highchart config="historicalChartConfig" id="historical"/></div>
+<div class="alert alert-info" role="alert">
+  {{status}}
+</div>

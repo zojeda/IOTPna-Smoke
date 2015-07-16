@@ -7,7 +7,7 @@ var Signal = require('./models/Signal');
 
 var defaultConfig = {
   mongodb: 'mongo://localhost/db_test',
-  reader: require('./mock_reader')
+  reader: require('../mock_reader')
 };
 
 module.exports = {
