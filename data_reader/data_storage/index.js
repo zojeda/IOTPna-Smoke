@@ -20,6 +20,7 @@ module.exports = {
 function Reader(config) {
   var self = this;
   this.cfg = config || {};
+  this.parseData = this.cfg.parseData || this.defaultParseData ;
 
   this.connect = function() {
     mongoose.connect(this.cfg.mongodb);
@@ -29,11 +30,11 @@ function Reader(config) {
     mongoose.connection.close();
   };
 
-  this.read = function() {
-      this.cfg.reader.read()
-        .then(this.saveRawData)
-        .then(this.saveData);
-        //.then(this.disconnect);
+  this.startRead = function() {
+      this.cfg.reader.startRead(function(data) {
+         self.saveRawData(data);
+         self.saveData(data);
+      })
     },
 
     this.saveRawData = function(data) {
@@ -52,7 +53,7 @@ function Reader(config) {
     return signal;
   };
 
-  this.parseData = function(data) {
+  this.defaultParseData = function(data) {
     console.log('parsing data : ' + data);
     var vars = {};
     data.split('&').forEach(function(variable) {

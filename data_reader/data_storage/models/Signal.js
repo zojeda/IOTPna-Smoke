@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var SignalSchema = new mongoose.Schema({
   temperature: Number,
   smoke: Number,
+  humidity: Number,
   time : { type : Date, default: Date.now }
 }, { capped: 1024 });
 

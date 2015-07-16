@@ -12,6 +12,7 @@
     "mongoose": "^4.0.5",
     "promise": "^7.0.1",
     "serialport": "^1.7.4",
+    "sprintf-js": "^1.0.3",
     "underscore": "^1.8.3"
   }
 }

@@ -1,13 +1,22 @@
 'use strict';
-
 var _ = require('underscore');
-var Promise = require('promise');
+var sprintf = require('sprintf-js').sprintf;
+
 
 module.exports = {
-  read: function() {
-      return new Promise(function(resolve, reject) {
-        var value = 'temp=' + _.random(0, 100)/100 + '&smoke=' + _.random(0, 100)/100;
-        return resolve(value);
-      });
+  startRead: function(onDataCb) {
+    setInterval(function() {
+      var data = generateData();
+      onDataCb(data);
+    }, 1000);
   }
 };
+
+function generateData() {
+  var data = {
+    gas: _.random(0, 100) / 100,
+    temp: _.random(0, 100) / 100,
+    hum: _.random(0, 100) / 100
+  }
+  return sprintf('<Gas: %(gas).2f[PPM]>		<Temperatura: %(temp).2f[*C]>		<Humedad: %(hum).2f[%%]>', data);
+}
