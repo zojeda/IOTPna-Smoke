@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('smokeWebClient')
-  .directive('ngSmokeLevel', function() {
+  .directive('hxSmokeLevel', function() {
     return {
-      templateUrl: 'app/directives/smokeLevel.html'
-    }
+      templateUrl: 'app/directives/smokeLevel.svg'
+    };
   });

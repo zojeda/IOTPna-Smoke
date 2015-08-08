@@ -1,4 +1,4 @@
 {
-  "mongodbUrl": "mongodb://hxpws-zojeda/test_db",
+  "mongodbUrl": "mongodb://localhost/test_db",
   "serialDevice": "COM4"
 }

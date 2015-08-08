@@ -14,9 +14,9 @@ module.exports = {
 
 function generateData() {
   var data = {
-    gas: _.random(0, 100) / 100,
-    temp: _.random(0, 100) / 100,
-    hum: _.random(0, 100) / 100
+    gas: _.random(0, 100),
+    temp: _.random(0, 100),
+    hum: _.random(0, 100)
   }
   return sprintf('<Gas: %(gas).2f[PPM]>		<Temperatura: %(temp).2f[*C]>		<Humedad: %(hum).2f[%%]>', data);
 }

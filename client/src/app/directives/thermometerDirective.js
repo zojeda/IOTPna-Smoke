@@ -1,8 +1,24 @@
 'use strict';
 
 angular.module('smokeWebClient')
-  .directive('ngThermometer', function() {
-    return {
-      templateUrl: 'app/directives/thermometer.html'
+  .directive('hxThermometer', function() {
+    function link(scope, element, attrs) {
+
+      var temperature;
+
+      function updateTemp() {
+        var yval = (250/130)*(120-temperature);
+        element.find('#temp_val_rect').attr('y', yval);
+      }
+      scope.$watch(attrs.temp, function(value) {
+        temperature = value;
+        updateTemp();
+      });
+      updateTemp();
     }
+
+    return {
+      templateUrl: 'app/directives/thermometer.svg',
+      link: link
+    };
   });

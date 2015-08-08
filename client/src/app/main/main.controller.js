@@ -48,13 +48,11 @@ angular.module('smokeWebClient')
         data: []
 
       }
-
     );
-
     $scope.thermometer = {
       value: '100'
-    }
+    };
     $scope.smokeLevel = {
       value: '50'
-    }
+    };
   });

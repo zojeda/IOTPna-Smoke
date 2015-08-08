@@ -1,9 +1,4 @@
-<div class="panel panel-default directivePanel">
-    <div class="panel-heading">
-        <h3 class="panel-title">CO2</h3>
-    </div>
-    <div class="panel-body">
-        <svg
+<svg
 		   xmlns:dc="http://purl.org/dc/elements/1.1/"
 		   xmlns:cc="http://creativecommons.org/ns#"
 		   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -138,7 +133,4 @@
 			   style="fill:url(#linearGradient8091);fill-opacity:1;stroke:#000000;stroke-width:5.74049759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
 			   clip-path="url(#clipPath8083)" />
 		  </g>
-		</svg>
-		<h2 style="text-align:center;">{{smokeLevel.value * 100 | number : 1}} %</h2>
-    </div>            
-</div>  
+</svg>

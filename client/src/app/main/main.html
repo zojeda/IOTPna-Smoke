@@ -6,12 +6,25 @@
     {{error}}
   </div>
   <div class="pull-left">
-    <div ng-thermometer></div>
+    <div class="panel panel-default directivePanel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Temp</h3>
+      </div>
+      <hx-thermometer temp="thermometer.value"></hx-thermometer>
+      <h2 style="text-align:center;">{{thermometer.value | number : 1}} ºC</h2>
+    </div>
   </div>
   <div class="pull-left">
-    <div ng-smoke-level></div>
+    <div class="panel panel-default directivePanel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Smoke</h3>
+      </div>
+      <hx-smoke-level level="smokeLevel.value"></hx-smoke-level>
+      <h2 style="text-align:center;">{{smokeLevel.value | number : 1}} PPM</h2>
+    </div>
   </div>
-  <highchart config="historicalChartConfig" id="historical"/></div>
+  <highchart config="historicalChartConfig" id="historical" />
+</div>
 <div class="alert alert-info" role="alert">
   {{status}}
 </div>
