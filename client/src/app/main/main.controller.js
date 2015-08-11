@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('smokeWebClient')
-  .controller('MainCtrl', function($scope, socketio) {
+  .controller('MainCtrl', function($scope) {
     $scope.error = undefined;
+
+    var socketio = io.connect('http://192.168.0.107:8080')
 
     socketio.on('data', function(data) {
       var time = new Date(data.time);
@@ -12,14 +14,19 @@ angular.module('smokeWebClient')
       $scope.thermometer.value = data.temperature;
       $scope.error = undefined;
       $scope.smokeLevel.value = data.smoke;
+      $scope.$apply();
     });
+
+
 
     socketio.on('error', function(message) {
       $scope.error = message;
+      $scope.$apply();
     });
 
     socketio.on('status', function(message) {
       $scope.status = message;
+      $scope.$apply();
     });
 
     $scope.historicalChartConfig = {
@@ -55,4 +62,9 @@ angular.module('smokeWebClient')
     $scope.smokeLevel = {
       value: '50'
     };
-  });
+    if (window.cordova !== undefined) {
+      window.ZeroConf.watch('_smokeDetector._tcp.local.', function(event) {
+        console.log(event.service.urls[0]);
+      });
+    }
+});
