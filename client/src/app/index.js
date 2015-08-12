@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('smokeWebClient', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'highcharts-ng'])
+angular.module('smokeWebClient', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'highcharts-ng', 'monospaced.qrcode'])
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {

@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server, {'transports': ['websocket', 'polling']});
+var mdns = require('mdns');
 
 app.use(express.static('../client/dist'));
 
@@ -9,7 +10,6 @@ app.get('/', function(req, res) {
   res.sendFile('../client/dist' + '/index.html');
 });
 
-server.listen(8080);
 var subscriber = require('./subscriber.js');
 var configuration = require('../config.json');
 
@@ -35,3 +35,12 @@ function onDataError(err) {
     connectDb();
   }, 2000);
 }
+
+
+
+
+server.listen(8080, function() {
+  // advertise a http server on port 4321
+  var ad = mdns.createAdvertisement(mdns.tcp('sensorGrid'), server.address().port, {name: 'hx Sensor Grid'});
+  ad.start();
+} );

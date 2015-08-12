@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="alert alert-danger" ng-if="error" role="alert">
+    <span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>
+    <span class="sr-only">Error:</span>
+    {{error}}
+  </div>
+  <div class="pull-left">
+    <hx-thermometer temp="thermometer.value"></hx-thermometer>
+    <h2 style="text-align:center;">{{thermometer.value | number : 1}} ºC</h2>
+  </div>
+  <div class="pull-left">
+    <hx-smoke-level level="smokeLevel.value"></hx-smoke-level>
+    <h2 style="text-align:center;">{{smokeLevel.value | number : 1}} PPM</h2>
+  </div>
+  <highchart config="historicalChartConfig" id="historical" />
+</div>
+<div class="alert alert-info" role="alert">
+  {{status}}
+</div>

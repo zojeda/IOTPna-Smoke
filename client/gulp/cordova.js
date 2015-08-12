@@ -14,7 +14,7 @@ module.exports = function(options) {
       .pipe(plugin('../ZeroConf'))
       //.pipe(plugin('https://github.com/vstirbu/ZeroConf'))
       .pipe(android())
-      .pipe(gulp.dest('apk'))
+      .pipe(gulp.dest('dist/apk'))
   });
 
   gulp.task('run_android', ['build_mobile'], function(done) {
