@@ -3,7 +3,7 @@
 
 # Componentes
 ## data_reader
-Proceso node encargado de realizar las lecutras desde el dispositivo serie al que está conectado el arduino y guardar los datos crudos y procesados
+Proceso node encargado de realizar las lecutras desde el dispositivo serie al que está conectado el arduino y guardar los datos crudos y procesados.
 
 ## server
 Servidor web, sirve el cliente web, escucha por cambios en la collection "signals" de mongo y envía los datos a todos los clientes subsciptos usando [socket.io](http://socket.io/).

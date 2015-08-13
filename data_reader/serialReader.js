@@ -6,7 +6,7 @@ module.exports = function(port) {
 
   return {
     startRead: function(onDataCb) {
-        serialPort.on('open', function() {
+      serialPort.on('open', function() {
         console.log('Serial Port Opend');
         serialPort.on('data', function(data) {
           onDataCb(data.toString("ascii"));
