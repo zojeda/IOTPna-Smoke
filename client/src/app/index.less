@@ -13,9 +13,29 @@
   }
 }
 
-.directivePanel {
-    height: 510px;
+.status {
+    clear: both;
+    position: fixed;
+    z-index: 10;
+    height: 3em;
+    bottom: 0;
+    width: 100%;
+    opacity: 0.5;
+    text-align: right;
 }
+
+.sensor-widget {
+  svg {
+    // max-height: 300px;
+     max-width: 220px;
+  }
+
+  p {
+      text-align: center;
+      display: flex;
+  }
+}
+
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject
    all your less files automatically */
 // injector

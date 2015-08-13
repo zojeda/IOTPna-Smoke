@@ -39,8 +39,8 @@ function onDataError(err) {
 
 
 
-server.listen(8080, function() {
+server.listen(8081, function() {
   // advertise a http server on port 4321
-  var ad = mdns.createAdvertisement(mdns.tcp('sensorGrid'), server.address().port, {name: 'hx Sensor Grid'});
+  var ad = mdns.createAdvertisement(mdns.tcp('sensorGrid'), server.address().port, {name: 'hx Sensor Grid2'});
   ad.start();
 } );

@@ -10,7 +10,7 @@ angular.module('smokeWebClient')
         $log.log(event);
         var url = event.service.urls[0];
         if(event.action==='added') {
-          $scope.sensorDevices.push({location: url, name: 'name'});
+          $scope.sensorDevices.push({location: url, name: event.service});
           $scope.$apply();
         }
       });

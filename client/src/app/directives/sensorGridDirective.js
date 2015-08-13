@@ -8,32 +8,43 @@ angular.module('smokeWebClient')
       scope: {
         url: '='
       },
-      controller: function($scope, $window) {
-        $scope.error = undefined;
+      controllerAs: 'grid',
+      controller: function($window) {
+        this.error = undefined;
 
-        var socketio = $window.io.connect($scope.url);
+        this.thermometer = {
+          value: '100'
+        };
+        this.smokeLevel = {
+          value: '50'
+        };
+        this.humidity = {
+          value: '50'
+        };
+
+        var socketio = $window.io.connect(this.url);
 
         socketio.on('data', function(data) {
           var time = new Date(data.time);
 
-          $scope.historicalChartConfig.series[0].data.push([time.getTime(), data.temperature]);
-          $scope.historicalChartConfig.series[1].data.push([time.getTime(), data.smoke]);
-          $scope.thermometer.value = data.temperature;
-          $scope.error = undefined;
-          $scope.smokeLevel.value = data.smoke;
-          $scope.$apply();
+          this.historicalChartConfig.series[0].data.push([time.getTime(), data.temperature]);
+          this.historicalChartConfig.series[1].data.push([time.getTime(), data.smoke]);
+          this.thermometer.value = data.temperature;
+          this.error = undefined;
+          this.smokeLevel.value = data.smoke;
+          this.$apply();
         });
         socketio.on('error', function(message) {
-          $scope.error = message;
-          $scope.$apply();
+          this.error = message;
+          this.$apply();
         });
 
         socketio.on('status', function(message) {
-          $scope.status = message;
-          $scope.$apply();
+          this.status = message;
+          this.$apply();
         });
 
-        $scope.historicalChartConfig = {
+        this.historicalChartConfig = {
           options: {
             chart: {
               zoomType: 'x'
@@ -47,11 +58,11 @@ angular.module('smokeWebClient')
           },
           series: [],
           title: {
-            text: 'Datos'
+            text: 'Historical Data'
           },
           useHighStocks: true
         };
-        $scope.historicalChartConfig.series.push({
+        this.historicalChartConfig.series.push({
           id: 'Temperature',
           data: []
         },   {
@@ -59,12 +70,6 @@ angular.module('smokeWebClient')
           data: []
 
         });
-        $scope.thermometer = {
-          value: '100'
-        };
-        $scope.smokeLevel = {
-          value: '50'
-        };
       }
     };
   });
