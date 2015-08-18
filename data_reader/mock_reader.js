@@ -8,7 +8,7 @@ module.exports = {
     setInterval(function() {
       var data = generateData();
       onDataCb(data);
-    }, 1000);
+    }, 3000);
   }
 };
 
