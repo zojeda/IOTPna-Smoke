@@ -7,8 +7,10 @@ angular.module('smokeWebClient')
       var temperature;
 
       function updateTemp() {
-        var yval = (250/130)*(120-temperature);
-        element.find('#temp_val_rect').attr('y', yval);
+        if(temperature) {
+          var yval = (250/130)*(120-temperature);
+          element.find('#temp_val_rect').attr('y', yval);
+        }
       }
       scope.$watch(attrs.temp, function(value) {
         temperature = value;

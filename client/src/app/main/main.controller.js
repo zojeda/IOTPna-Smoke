@@ -1,58 +1,21 @@
 'use strict';
 
 angular.module('smokeWebClient')
-  .controller('MainCtrl', function($scope, socketio) {
-    $scope.error = undefined;
-
-    socketio.on('data', function(data) {
-      var time = new Date(data.time);
-
-      $scope.historicalChartConfig.series[0].data.push([time.getTime(), data.temperature]);
-      $scope.historicalChartConfig.series[1].data.push([time.getTime(), data.smoke]);
-      $scope.thermometer.value = data.temperature;
-      $scope.error = undefined;
-      $scope.smokeLevel.value = data.smoke;
-    });
-
-    socketio.on('error', function(message) {
-      $scope.error = message;
-    });
-
-    socketio.on('status', function(message) {
-      $scope.status = message;
-    });
-
-    $scope.historicalChartConfig = {
-      options: {
-        chart: {
-          zoomType: 'x'
-        },
-        rangeSelector: {
-          enabled: true
-        },
-        navigator: {
-          enabled: true
+  .controller('MainCtrl', function($scope, $window, $log) {
+    $scope.sensorDevices = [];
+    $scope.apkDir = $window.location.origin+"/apk/android-debug.apk";
+    $scope.cordovaClient = $window.cordova !== undefined;
+    if ($scope.cordovaClient) {
+      $window.ZeroConf.watch('_sensorGrid._tcp.local.', function(event) {
+        $log.log(event);
+        var url = event.service.urls[0];
+        if(event.action==='added') {
+          $scope.sensorDevices.push({location: url, name: event.service});
+          $scope.$apply();
         }
-      },
-      series: [],
-      title: {
-        text: 'Datos'
-      },
-      useHighStocks: true
-    };
-    $scope.historicalChartConfig.series.push({
-        id: 'Temperature',
-        data: []
-      },   {
-        id: 'Smoke/Gas',
-        data: []
-
-      }
-    );
-    $scope.thermometer = {
-      value: '100'
-    };
-    $scope.smokeLevel = {
-      value: '50'
-    };
+      });
+    } else {
+      var webServer = $window.location.origin;
+      $scope.sensorDevices.push({location: webServer, name: 'web'});
+    }
   });

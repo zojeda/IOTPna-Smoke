@@ -1,0 +1,3 @@
+[submodule "client/ZeroConf"]
+	path = client/ZeroConf
+	url = https://github.com/vstirbu/ZeroConf
