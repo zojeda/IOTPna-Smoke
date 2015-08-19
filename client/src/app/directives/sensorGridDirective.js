@@ -10,6 +10,7 @@ angular.module('smokeWebClient')
       },
       controllerAs: 'grid',
       controller: function($window) {
+        var self = this;
         this.error = undefined;
 
         this.thermometer = {
@@ -27,21 +28,21 @@ angular.module('smokeWebClient')
         socketio.on('data', function(data) {
           var time = new Date(data.time);
 
-          this.historicalChartConfig.series[0].data.push([time.getTime(), data.temperature]);
-          this.historicalChartConfig.series[1].data.push([time.getTime(), data.smoke]);
-          this.thermometer.value = data.temperature;
-          this.error = undefined;
-          this.smokeLevel.value = data.smoke;
-          this.$apply();
+          self.historicalChartConfig.series[0].data.push([time.getTime(), data.temperature]);
+          self.historicalChartConfig.series[1].data.push([time.getTime(), data.smoke]);
+          self.thermometer.value = data.temperature;
+          self.error = undefined;
+          self.smokeLevel.value = data.smoke;
+          self.$apply();
         });
         socketio.on('error', function(message) {
-          this.error = message;
-          this.$apply();
+          self.error = message;
+          self.$apply();
         });
 
         socketio.on('status', function(message) {
-          this.status = message;
-          this.$apply();
+          self.status = message;
+          self.$apply();
         });
 
         this.historicalChartConfig = {
