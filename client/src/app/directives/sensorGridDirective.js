@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('smokeWebClient')
-  .directive('hxSensorGrid', function() {
+  .directive('hxSensorGrid', function($scope) {
     return {
       restrict: 'E',
       templateUrl: 'app/directives/sensorGrid.html',
@@ -33,16 +33,16 @@ angular.module('smokeWebClient')
           self.thermometer.value = data.temperature;
           self.error = undefined;
           self.smokeLevel.value = data.smoke;
-          self.$apply();
+          $scope.$apply();
         });
         socketio.on('error', function(message) {
           self.error = message;
-          self.$apply();
+          $scope.$apply();
         });
 
         socketio.on('status', function(message) {
           self.status = message;
-          self.$apply();
+          $scope.$apply();
         });
 
         this.historicalChartConfig = {
