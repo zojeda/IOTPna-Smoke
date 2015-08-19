@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('smokeWebClient')
-  .directive('hxSensorGrid', function($scope) {
+  .directive('hxSensorGrid', function() {
     return {
       restrict: 'E',
       templateUrl: 'app/directives/sensorGrid.html',
@@ -9,7 +9,7 @@ angular.module('smokeWebClient')
         url: '='
       },
       controllerAs: 'grid',
-      controller: function($window) {
+      controller: function($window, $scope) {
         var self = this;
         this.error = undefined;
 
