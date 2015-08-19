@@ -30,9 +30,10 @@ angular.module('smokeWebClient')
 
           self.historicalChartConfig.series[0].data.push([time.getTime(), data.temperature]);
           self.historicalChartConfig.series[1].data.push([time.getTime(), data.smoke]);
-          self.thermometer.value = data.temperature;
           self.error = undefined;
+          self.thermometer.value = data.temperature;
           self.smokeLevel.value = data.smoke;
+          self.humidity.value = data.humidity;
           $scope.$apply();
         });
         socketio.on('error', function(message) {
