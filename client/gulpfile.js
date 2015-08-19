@@ -9,6 +9,10 @@ var options = {
   dist: 'dist',
   tmp: '.tmp',
   e2e: 'e2e',
+  //mobile client info
+  id: 'com.hexacta.iot',
+  name: 'Smoke Sensor',
+
   errorHandler: function(title) {
     return function(err) {
       gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
