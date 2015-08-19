@@ -22,15 +22,28 @@ function connectDb() {
 }
 
 function onData(signal) {
+  lastErrorTailedCursorExhaust = undefined;
   io.emit('data', signal);
   io.emit('status', "receiving data ...");
 }
+
+var lastErrorTailedCursorExhaust = undefined;
 function onDataError(err) {
+  console.log(err);
   if('No more documents in tailed cursor' === err.message) {
-    io.emit('error', "check datastorage sensor process, it seems to be down");
+    if(lastErrorTailedCursorExhaust && process.hrtime(lastErrorTailedCursorExhaust)[0]>5) {
+      io.emit('error', "check datastorage sensor process, it seems to be down");
+    } else {
+      lastErrorTailedCursorExhaust = lastErrorTailedCursorExhaust ? lastErrorTailedCursorExhaust : process.hrtime();
+    }
   } else {
     io.emit('error', err);
   }
+  reconnect();
+}
+
+
+function reconnect() {
   setTimeout(function() {
     io.emit('status', "trying to reconnect....");
     connectDb();

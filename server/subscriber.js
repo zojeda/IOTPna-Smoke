@@ -33,7 +33,8 @@ module.exports.subscribe = function(dbUrl, collectionName, filter, callback, err
         var cursorOptions = {
           tailable: true,
           awaitdata: true,
-          numberOfRetries: -1
+          numberOfRetries: 3,
+          tailableRetryInterval: 3000
 
         };
 
