@@ -38,7 +38,7 @@ function onDataError(err) {
     io.emit('error', err);
   }
   reconnect();
-}
+} 
 
 
 function reconnect() {
