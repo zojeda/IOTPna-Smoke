@@ -7,8 +7,8 @@ angular.module('smokeWebClient')
       var temperature;
 
       function updateTemp() {
-        if(temperature) {
-          var yval = (250/130)*(120-temperature);
+        if (temperature) {
+          var yval = (250 / 130) * (120 - temperature);
           element.find('#temp_val_rect').attr('y', yval);
         }
       }
