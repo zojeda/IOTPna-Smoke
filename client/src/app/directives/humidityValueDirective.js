@@ -8,9 +8,11 @@ angular.module('smokeWebClient')
 
       function updateHumidityValue() {
         if (humidityValue) {
+          var opacityValue = "opacity:" + humidityValue/100.0;
+          element.find('#humidity_value').attr('style', opacityValue);
         }
       }
-      scope.$watch(attrs.level, function(value) {
+      scope.$watch(attrs.value, function(value) {
         humidityValue = value;
         updateHumidityValue();
       });

@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server, {'transports': ['websocket', 'polling']});
-var mdns = require('mdns');
 
 app.use(express.static('../client/dist'));
 
@@ -52,8 +51,11 @@ function reconnect() {
 
 
 
-server.listen(8081, function() {
-  // advertise a http server on port 4321
-  var ad = mdns.createAdvertisement(mdns.tcp('sensorGrid'), server.address().port, {name: 'hx Sensor Grid2'});
-  ad.start();
+server.listen(8080, function() {
+
+  if(process.platform==='linux') {
+    var mdns = require('mdns');
+    var ad = mdns.createAdvertisement(mdns.tcp('sensorGrid'), server.address().port, {name: 'hx Sensor Grid2'});
+    ad.start();
+  }
 } );
