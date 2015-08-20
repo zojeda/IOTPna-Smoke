@@ -15,7 +15,7 @@ var config = {
   }
 };
 
-if(configuration.serialReader && configuration.serialReader !== 'mock') {
+if(configuration.serialDevice && configuration.serialDevice !== 'mock') {
   config.reader = require('./serialReader')(configuration.serialDevice);
 }
 
