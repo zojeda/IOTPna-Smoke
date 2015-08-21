@@ -37,7 +37,7 @@ angular.module('smokeWebClient')
           $scope.$apply();
         });
         socketio.on('error', function(message) {
-          self.error = message;
+          self.error = message;      
           $scope.$apply();
         });
 

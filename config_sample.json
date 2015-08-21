@@ -1,4 +1,0 @@
-{
-  "mongodbUrl": "mongodb://localhost/test_db",
-  "serialDevice": "COM4"
-}
