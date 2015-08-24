@@ -41,8 +41,8 @@ function onDataError(err) {
   } else {
     io.emit('error', err);
   }
-  // send email to warn about this error
-  sendEmail(err);
+  // get receivers and send email to warn about this error
+  createEmail(err);
   reconnect();
 } 
 
@@ -61,7 +61,27 @@ function reconnect() {
   }, 2000);
 }
 
-function sendEmail(errorMessage){
+function connect(){
+    mongoose.connect(configuration.mongodbUrl);
+}
+
+function disconnect(){
+    mongoose.connection.close();
+}
+
+function createEmail(errorMessage) {
+    connect();
+    Receiver.find({}, function(err, docs) {
+        disconnect();
+        if (!err){ 
+            sendEmail(errorMessage, EmailJsonToString(docs));
+        } else {
+            throw err;
+        }
+    });
+}
+
+function sendEmail(errorMessage, receivers){
     var transport = nodemailer.createTransport(smtpTransport({
         host: configuration.smtp.host,
         port: configuration.smtp.port,
@@ -71,14 +91,10 @@ function sendEmail(errorMessage){
         }
     }));
     
-    var from = "IoT Parana <iotparana@hexacta.com>";
-    //var receivers = EmailJsonToString(ListReceiver());
-    var receivers = "";
-    
     transport.sendMail({
-       from: from, // sender address
+       from: configuration.smtp.from,
        to: receivers, // comma separated list of receivers
-       subject: "Smoke detector alert", // Subject line
+       subject: "Smoke detector alert",
        html: "<h3>Smoke detector</h3>" + 
                 "<p>Something went wrong! Please, see the error details for more information.</br> <b>Error details: </b>" +                    errorMessage + "</p>" 
     }, sendEmailResult);
@@ -93,35 +109,23 @@ function sendEmailResult(error, response){
 }
 
 function CreateReceiver(receiver) {
-    mongoose.connect(configuration.mongodbUrl);
+    connect();
     Receiver.create({
         name: receiver.name,
         email: receiver.email
     });
-    mongoose.connection.close();
+    disconnect();
     return data;
 }
 
-function ListReceiver() {
-    mongoose.connect(configuration.mongodbUrl);
-    var receivers = Receiver.find({}, function(err, docs) {
-        if (!err){ 
-            return docs;
-        } else {
-            throw err;
-        }
-    });
-}
-
 function EmailJsonToString(json){
-    var stringList = "";
+    var emails = "";
     for(var receiver in json){
-        stringList += receiver.name + " <" + receiver.email + ">,";
-        console.log(stringList);
+        emails += json[receiver].name + " <" + json[receiver].email + ">,";
     }
-    if(stringList.length > 0)
+    if(emails.length > 0)
     {
-        stringList = stringList.substring(0, stringList.length - 1);
+        emails = emails.substring(0, emails.length - 1);
     }
-    return stringList;
+    return emails;
 }

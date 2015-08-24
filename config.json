@@ -1,10 +1,11 @@
 {
-  "mongodbUrl": "mongodb://localhost/test_db",
+  "mongodbUrl": "mongodb://HXSHPDEV01/test_db",
   "serialDevice": "COM4",
   "smtp": {
         "host": "smtp.mandrillapp.com",
         "port": 587,
         "user": "it_team@hexacta.com",
-        "pass": "I0Arqx_i5Dc4GS_4QSMbCQ"
+        "pass": "I0Arqx_i5Dc4GS_4QSMbCQ",
+        "from": "IoT Parana <iotparana@hexacta.com>"
   }
 }
