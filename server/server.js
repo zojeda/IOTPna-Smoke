@@ -18,7 +18,6 @@ var configuration = require('../config.json');
 
 connectDb();
 
-
 function connectDb() {
   subscriber.subscribe(configuration.mongodbUrl, 'signals', onData, onDataError);
 }
@@ -115,7 +114,7 @@ function CreateReceiver(receiver) {
         email: receiver.email
     });
     disconnect();
-    return data;
+    return receiver;
 }
 
 function EmailJsonToString(json){
