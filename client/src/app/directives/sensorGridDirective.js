@@ -9,20 +9,48 @@ angular.module('smokeWebClient')
         url: '='
       },
       controllerAs: 'grid',
-      controller: function($window, $scope) {
+      controller: function($window, $scope, $http, $log) {
         var self = this;
         this.error = undefined;
-
-        this.thermometer = {
-          value: '100'
-        };
-        this.smokeLevel = {
-          value: '50'
-        };
-        this.humidity = {
-          value: '50'
-        };
-
+        $http.get('/api/thresholds/thermometer')
+            .success(function(data) {
+                self.thermometer = { 
+                    type: data[0].type,
+                    value: data[0].default, 
+                    min: data[0].min, 
+                    max: data[0].max 
+                }
+            })
+            .error(function(data) {
+                $log.log('Error: ' + data);
+            });
+        
+        $http.get('/api/thresholds/smoke')
+            .success(function(data) {
+                self.smokeLevel = {
+                    type: data[0].type,
+                    value: data[0].default, 
+                    min: data[0].min, 
+                    max: data[0].max 
+                }
+            })
+            .error(function(data) {
+                $log.log('Error: ' + data);
+            });
+          
+        $http.get('/api/thresholds/humidity')
+            .success(function(data) {
+                self.humidity = { 
+                    type: data[0].type,
+                    value: data[0].default, 
+                    min: data[0].min, 
+                    max: data[0].max 
+                }
+            })
+            .error(function(data) {
+                $log.log('Error: ' + data);
+            });
+             
         var socketio = $window.io.connect(this.url);
 
         socketio.on('data', function(data) {

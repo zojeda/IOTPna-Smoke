@@ -1,31 +1,64 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
+var bodyParser = require('body-parser');
 var io = require('socket.io')(server, {'transports': ['websocket', 'polling']});
-var nodemailer = require("nodemailer");
-var smtpTransport = require('nodemailer-smtp-transport');
 var mongoose = require('mongoose');
-var Receiver = require('./models/Receiver');
+var Threshold = require('./models/Threshold');
+
+var subscriber = require('./subscriber.js');
+var configuration = require('../config.json');
+var email = require('./email.js');
+var notification = email.create();
+var threshold = require('./threshold.js');
+
+connect();
+connectDb();
 
 app.use(express.static('../client/dist'));
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get('/', function(req, res) {
   res.sendFile('../client/dist' + '/index.html');
 });
 
-var subscriber = require('./subscriber.js');
-var configuration = require('../config.json');
+app.get('/api/thresholds', function(req, res) {
+    Threshold.find({}, function(err, thresholds) {
+        if (err)
+            res.send(err);
+        
+        res.json(thresholds);        
+    });
+});
 
-connectDb();
+app.get('/api/thresholds/:type', function(req, res) {
+    Threshold.find({ type : req.params.type }, function(err, thresholds) {
+        if (err)
+            res.send(err);
+        
+        res.json(thresholds);        
+    });
+});
+
+app.put('/api/thresholds/:type', function(req, res) {
+    Threshold.findOneAndUpdate({ type : req.params.type }, { min: req.body.min, max: req.body.max }, function(err, threshold)     {
+        if (err)
+            res.send(err);
+
+        res.json(threshold);        
+    });
+});
 
 function connectDb() {
   subscriber.subscribe(configuration.mongodbUrl, 'signals', onData, onDataError);
 }
 
 function onData(signal) {
-  lastErrorTailedCursorExhaust = undefined;
-  io.emit('data', signal);
-  io.emit('status', "receiving data ...");
+    lastErrorTailedCursorExhaust = undefined;
+    io.emit('data', signal);
+    io.emit('status', "receiving data ...");
+    threshold.validate(signal, notification);
 }
 
 var lastErrorTailedCursorExhaust = undefined;
@@ -41,7 +74,7 @@ function onDataError(err) {
     io.emit('error', err);
   }
   // get receivers and send email to warn about this error
-  createEmail(err);
+  notification.send(err);
   reconnect();
 } 
 
@@ -60,71 +93,10 @@ function reconnect() {
   }, 2000);
 }
 
-function connect(){
+function connect() {
     mongoose.connect(configuration.mongodbUrl);
-}
+};
 
-function disconnect(){
+function disconnect() {
     mongoose.connection.close();
-}
-
-function createEmail(errorMessage) {
-    connect();
-    Receiver.find({}, function(err, docs) {
-        disconnect();
-        if (!err){ 
-            sendEmail(errorMessage, EmailJsonToString(docs));
-        } else {
-            throw err;
-        }
-    });
-}
-
-function sendEmail(errorMessage, receivers){
-    var transport = nodemailer.createTransport(smtpTransport({
-        host: configuration.smtp.host,
-        port: configuration.smtp.port,
-        auth: {
-            user: configuration.smtp.user,
-            pass: configuration.smtp.pass
-        }
-    }));
-    
-    transport.sendMail({
-       from: configuration.smtp.from,
-       to: receivers, // comma separated list of receivers
-       subject: "Smoke detector alert",
-       html: "<h3>Smoke detector</h3>" + 
-                "<p>Something went wrong! Please, see the error details for more information.</br> <b>Error details: </b>" +                    errorMessage + "</p>" 
-    }, sendEmailResult);
-}
-
-function sendEmailResult(error, response){
-   if(error){
-       console.log("Email failed. " + error);
-   }else{
-       console.log("Message sent: " + response.message);
-   }
-}
-
-function CreateReceiver(receiver) {
-    connect();
-    Receiver.create({
-        name: receiver.name,
-        email: receiver.email
-    });
-    disconnect();
-    return receiver;
-}
-
-function EmailJsonToString(json){
-    var emails = "";
-    for(var receiver in json){
-        emails += json[receiver].name + " <" + json[receiver].email + ">,";
-    }
-    if(emails.length > 0)
-    {
-        emails = emails.substring(0, emails.length - 1);
-    }
-    return emails;
-}
+};

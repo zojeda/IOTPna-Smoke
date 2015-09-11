@@ -6,21 +6,30 @@
 
 <div class="container-fluid">
   <div class="row">
-      <div class="sensor-widget col-xs-6 col-md-2 col-lg-2" >
+      <div class="sensor-widget col-xs-12 col-md-4 col-lg-4 text-center" >
         <hx-thermometer temp="grid.thermometer.value"></hx-thermometer>
-        <p> {{grid.thermometer.value | number : 1}} ºC</p>
+        <div class="text-center">{{grid.thermometer.value | number : 1}} ºC</div>
+        <hx-slider min="grid.thermometer.min" max="grid.thermometer.max" type="grid.thermometer.type"></hx-slider>  
       </div>
-      <div class="sensor-widget col-xs-6 col-md-5 col-lg-3">
+      <div class="sensor-widget col-xs-12 col-md-4 col-lg-4 text-center">
         <hx-smoke-level level="grid.smokeLevel.value"></hx-smoke-level>
-        <p> {{grid.smokeLevel.value | number : 1}} PPM</p>
+        <div class="text-center">{{grid.smokeLevel.value | number : 1}} PPM</div>
+        <hx-slider min="grid.smokeLevel.min" max="grid.smokeLevel.max" type="grid.smokeLevel.type"></hx-slider>  
       </div>
-      <div class="sensor-widget col-xs-6 col-md-5 col-lg-3">
+      <div class="sensor-widget col-xs-12 col-md-4 col-lg-4 text-center">
         <hx-humidity-value value="grid.humidity.value"></hx-humidity-value>
-        <p> {{grid.humidity.value | number : 1}} %</p>
+        <div class="text-center">{{grid.humidity.value | number : 1}} %</div>
+        <hx-slider min="grid.humidity.min" max="grid.humidity.max" type="grid.humidity.type"></hx-slider>  
       </div>
       <div class="clearfix visible-md-block"></div>
-      <highchart config="grid.historicalChartConfig" id="historical" class="col-xs-12  col-md-12  col-lg-4" />
   </div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <highchart config="grid.historicalChartConfig" id="historical" class="col-xs-12  col-md-12  col-lg-12" />
+            </div>
+        </div>        
+    </div>
 </div>
 <div class="alert alert-info status" role="alert">
   {{grid.status}}

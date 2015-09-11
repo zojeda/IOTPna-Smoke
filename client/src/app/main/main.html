@@ -1,9 +1,10 @@
 <div ng-include="'app/components/navbar/navbar.html'"></div>
-<div ng-if="!cordovaClient" class="jumbotron">
-  <span>Download Android APK<span>
-  <qrcode data="{{apkDir}}" href="{{apkDir}}"></qrcode>
-</div>
+
 <div ng-repeat="sensors in sensorDevices">
   <p ng-if="sensors.name != 'web' ">{{sensors.name}}</p>
   <hx-sensor-grid url="sensors.location"></hx-sensor-grid>
+</div>
+<div ng-if="!cordovaClient" class="jumbotron">
+  <span>Download Android APK<span>
+  <qrcode data="{{apkDir}}" href="{{apkDir}}"></qrcode>
 </div>

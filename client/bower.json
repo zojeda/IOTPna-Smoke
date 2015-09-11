@@ -13,7 +13,8 @@
     "highstock-release": "latest",
     "highcharts-ng": "~0.0.8",
     "sio-client": "~1.3.6",
-    "angular-qrcode": "monospaced/angular-qrcode#~6.0.3"
+    "angular-qrcode": "monospaced/angular-qrcode#~6.0.3",
+    "nouislider": "~8.0.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.4"
