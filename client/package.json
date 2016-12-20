@@ -2,7 +2,8 @@
   "name": "smokeWebClient",
   "version": "0.0.0",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "start": "gulp start"
   },
   "devDependencies": {
     "browser-sync": "~2.1.4",
